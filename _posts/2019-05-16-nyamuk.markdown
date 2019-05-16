@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Nyamuk Nakal"
-date:   2019-05-16 05:46:00 +0700
+date:   2019-05-16 18:04:00 +0700
 categories: jekyll update
 ---
 nyamuk nakal
@@ -11,3 +11,20 @@ nyamuk nakal
 - nyedot semua
 
 # PARAH BETTTTTT...
+
+## Star Rating
+<label>
+	<input type="radio" name="star"><span class="rate">&#9733;</span>&#9734;&#9734;&#9734;&#9734;<br>
+</label>
+<label>
+	<input type="radio" name="star"><span class="rate">&#9733;&#9733;</span>&#9734;&#9734;&#9734;<br>
+</label>
+<label>
+	<input type="radio" name="star"><span class="rate">&#9733;&#9733;&#9733;</span>&#9734;&#9734;<br>
+</label>
+<label>
+	<input type="radio" name="star"><span class="rate">&#9733;&#9733;&#9733;&#9733;</span>&#9734;<br>
+</label>
+<label>
+	<input type="radio" name="star"><span class="rate">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+</label>
