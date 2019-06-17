@@ -1,18 +1,970 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>163</title>
-	<style>
-		@import url(https://fonts.googleapis.com/css?family=Carrois+Gothic);@font-face{font-family:matrix-code;src:url(/fonts/matrix-code.eot?#iefix) format('embedded-opentype'),url(/fonts/matrix-code.woff) format('woff'),url(/fonts/matrix-code.ttf) format('truetype'),url(/fonts/matrix-code.svg#svgFontName) format('svg')}body,html{-webkit-font-smoothing:antialiased;font:normal 12px/14px "Carrois Gothic",sans-serif;width:100%;height:100%;margin:0;overflow:hidden;color:#fff;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}body{background:#000}#stats{z-index:100}#info{background:rgba(0,0,0,.7);position:fixed;bottom:0;left:0;width:250px;padding:10px 20px 20px;z-index:100;-webkit-transform-origin:bottom center;-moz-transform-origin:bottom center;-o-transform-origin:bottom center;transform-origin:bottom center;-webkit-transform:rotate(0);-moz-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0);-webkit-transition:-webkit-transform .5s ease-in-out;-moz-transition:-moz-transform .5s ease-in-out;-o-transition:-o-transform .5s ease-in-out;transition:transform .5s ease-in-out}#info.closed{-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);-o-transform:rotate(180deg);transform:rotate(180deg)}.toggle-info{position:absolute;display:block;height:10px;background:rgba(0,0,0,.8);width:290px;left:0;text-align:center;padding:3px 0 7px;text-decoration:none;color:#fff;text-shadow:none}.toggle-info:hover{background:#000}#close{top:-20px}#open{bottom:-20px;-webkit-transform:rotate(-180deg);-moz-transform:rotate(-180deg);-o-transform:rotate(-180deg);transform:rotate(-180deg)}button{background:rgba(255,255,255,.2);color:#fff;border:0;border-radius:2px;padding:7px 10px;box-shadow:0 0 3px 0 rgba(255,255,255,.3);cursor:pointer}button:hover{background:rgba(255,255,255,.1)}p a{color:#fff}p a:hover{color:#effdeb;text-shadow:0 0 5px #75ad61}
-	</style>
-</head>
-<body>
-	
-	<canvas id="canvas"></canvas>
 
-	<script>
-		var Stats=function(){var l=Date.now(),m=l,g=0,n=Infinity,o=0,h=0,p=Infinity,q=0,r=0,s=0,f=document.createElement("div");f.id="stats";f.addEventListener("mousedown",function(b){b.preventDefault();t(++s%2)},!1);f.style.cssText="width:80px;opacity:0.9;cursor:pointer";var a=document.createElement("div");a.id="fps";a.style.cssText="padding:0 0 3px 3px;text-align:left;background-color:#002";f.appendChild(a);var i=document.createElement("div");i.id="fpsText";i.style.cssText="color:#0ff;font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:bold;line-height:15px";i.innerHTML="FPS";a.appendChild(i);var c=document.createElement("div");c.id="fpsGraph";c.style.cssText="position:relative;width:74px;height:30px;background-color:#0ff";for(a.appendChild(c);74>c.children.length;){var j=document.createElement("span");j.style.cssText="width:1px;height:30px;float:left;background-color:#113";c.appendChild(j)}var d=document.createElement("div");d.id="ms";d.style.cssText="padding:0 0 3px 3px;text-align:left;background-color:#020;display:none";f.appendChild(d);var k=document.createElement("div");k.id="msText";k.style.cssText="color:#0f0;font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:bold;line-height:15px";k.innerHTML="MS";d.appendChild(k);var e=document.createElement("div");e.id="msGraph";e.style.cssText="position:relative;width:74px;height:30px;background-color:#0f0";for(d.appendChild(e);74>e.children.length;)j=document.createElement("span"),j.style.cssText="width:1px;height:30px;float:left;background-color:#131",e.appendChild(j);var t=function(b){s=b;switch(s){case 0:a.style.display="block";d.style.display="none";break;case 1:a.style.display="none",d.style.display="block"}};return{REVISION:11,domElement:f,setMode:t,begin:function(){l=Date.now()},end:function(){var b=Date.now();g=b-l;n=Math.min(n,g);o=Math.max(o,g);k.textContent=g+" MS ("+n+"-"+o+")";var a=Math.min(30,30-30*(g/200));e.appendChild(e.firstChild).style.height=a+"px";r++;b>m+1E3&&(h=Math.round(1E3*r/(b-m)),p=Math.min(p,h),q=Math.max(q,h),i.textContent=h+" FPS ("+p+"-"+q+")",a=Math.min(30,30-30*(h/100)),c.appendChild(c.firstChild).style.height=a+"px",m=b,r=0);return b},update:function(){l=this.end()}}};!function(){for(var e=0,t=["ms","moz","webkit","o"],n=0;n<t.length&&!window.requestAnimationFrame;++n)window.requestAnimationFrame=window[t[n]+"RequestAnimationFrame"],window.cancelAnimationFrame=window[t[n]+"CancelAnimationFrame"]||window[t[n]+"CancelRequestAnimationFrame"];window.requestAnimationFrame||(window.requestAnimationFrame=function(t,n){var o=(new Date).getTime(),i=Math.max(0,16-(o-e)),a=window.setTimeout(function(){t(o+i)},i);return e=o+i,a}),window.cancelAnimationFrame||(window.cancelAnimationFrame=function(e){clearTimeout(e)})}();var stats=new Stats;stats.setMode(0),stats.domElement.style.position="absolute",stats.domElement.style.left="0px",stats.domElement.style.top="0px",document.body.appendChild(stats.domElement);var M={settings:{COL_WIDTH:20,COL_HEIGHT:25,VELOCITY_PARAMS:{min:4,max:8},CODE_LENGTH_PARAMS:{min:20,max:40}},animation:null,c:null,ctx:null,lineC:null,ctx2:null,WIDTH:window.innerWidth,HEIGHT:window.innerHeight,COLUMNS:null,canvii:[],font:"30px matrix-code",letters:["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","0","1","2","3","4","5","6","7","8","9","$","+","-","*","/","=","%",'"',"'","#","&","_","(",")",",",".",";",":","?","!","\\","|","{","}","<",">","[","]","^","~"],codes:[],createCodeLoop:null,codesCounter:0,init:function(){M.c=document.getElementById("canvas"),M.ctx=M.c.getContext("2d"),M.c.width=M.WIDTH,M.c.height=M.HEIGHT,M.ctx.shadowBlur=0,M.ctx.fillStyle="#000",M.ctx.fillRect(0,0,M.WIDTH,M.HEIGHT),M.ctx.font=M.font,M.COLUMNS=Math.ceil(M.WIDTH/M.settings.COL_WIDTH);for(var e=0;e<M.COLUMNS;e++)M.codes[e]=[],M.codes[e][0]={open:!0,position:{x:0,y:0},strength:0};M.loop(),M.createLines(),M.createCode(),window.onresize=function(){window.cancelAnimationFrame(M.animation),M.animation=null,M.ctx.clearRect(0,0,M.WIDTH,M.HEIGHT),M.codesCounter=0,M.ctx2.clearRect(0,0,M.WIDTH,M.HEIGHT),M.WIDTH=window.innerWidth,M.HEIGHT=window.innerHeight,M.init()}},loop:function(){M.animation=requestAnimationFrame(function(){M.loop()}),M.draw(),stats.update()},draw:function(){var e,t,n,o,i;M.ctx.shadowColor="rgba(0, 0, 0, 0.5)",M.ctx.fillStyle="rgba(0, 0, 0, 0.5)",M.ctx.fillRect(0,0,M.WIDTH,M.HEIGHT),M.ctx.globalCompositeOperation="source-over";for(var a=0;a<M.COLUMNS;a++)M.codes[a][0].canvas&&(e=M.codes[a][0].velocity,t=M.codes[a][0].canvas.height,n=M.codes[a][0].position.x,o=M.codes[a][0].position.y-t,(i=M.codes[a][0].canvas).getContext("2d"),M.ctx.drawImage(i,n,o,M.settings.COL_WIDTH,t),M.codes[a][0].position.y-t<M.HEIGHT?M.codes[a][0].position.y+=e:M.codes[a][0].position.y=0)},createCode:function(){if(M.codesCounter>M.COLUMNS)clearTimeout(M.createCodeLoop);else{var e=M.randomFromInterval(0,100),t=M.assignColumn();if(t){var n=M.randomFromInterval(M.settings.CODE_LENGTH_PARAMS.min,M.settings.CODE_LENGTH_PARAMS.max),o=Math.random()*(M.settings.VELOCITY_PARAMS.max-M.settings.VELOCITY_PARAMS.min)+M.settings.VELOCITY_PARAMS.min,i=M.letters.length;M.codes[t][0].position={x:t*M.settings.COL_WIDTH,y:0},M.codes[t][0].velocity=o,M.codes[t][0].strength=M.codes[t][0].velocity/M.settings.VELOCITY_PARAMS.max;for(var a=1;a<=n;a++){var s=M.randomFromInterval(0,i-1);M.codes[t][a]=M.letters[s]}M.createCanvii(t),M.codesCounter++}M.createCodeLoop=setTimeout(M.createCode,e)}},createCanvii:function(e){var t,n,o=M.codes[e].length-1,i=o*M.settings.COL_HEIGHT,a=(M.codes[e][0].velocity,M.codes[e][0].strength),s=document.createElement("canvas"),c=s.getContext("2d");s.width=M.settings.COL_WIDTH,s.height=i;for(var r=1;r<o;r++)t=M.codes[e][r],c.globalCompositeOperation="source-over",c.font="30px matrix-code",r<5?(c.shadowColor="hsl(104, 79%, 74%)",c.shadowOffsetX=0,c.shadowOffsetY=0,c.shadowBlur=10,c.fillStyle="hsla(104, 79%, "+(100-5*r)+"%, "+a+")"):r>o-4?(n=1-(n=r/o),c.shadowOffsetX=0,c.shadowOffsetY=0,c.shadowBlur=0,c.fillStyle="hsla(104, 79%, 74%, "+(n+.3)+")"):(c.shadowOffsetX=0,c.shadowOffsetY=0,c.shadowBlur=0,c.fillStyle="hsla(104, 79%, 74%, "+a+")"),c.fillText(t,0,i-r*M.settings.COL_HEIGHT);M.codes[e][0].canvas=s},swapCharacters:function(){for(var e,t,n,o,i,a,s=0;s<20;s++)e=M.randomFromInterval(0,M.codes.length-1),n=(t=M.codes[e]).length,o=M.randomFromInterval(2,n-1),i=M.randomFromInterval(0,M.letters.length-1),a=M.letters[i],t[o]=a;M.swapCharacters()},createLines:function(){M.linesC=document.createElement("canvas"),M.linesC.width=M.WIDTH,M.linesC.height=M.HEIGHT,M.linesC.style.position="absolute",M.linesC.style.top=0,M.linesC.style.left=0,M.linesC.style.zIndex=10,document.body.appendChild(M.linesC);var e=0,t=0;for(M.ctx2=M.linesC.getContext("2d"),M.ctx2.beginPath(),M.ctx2.lineWidth=1,M.ctx2.strokeStyle="rgba(0, 0, 0, 0.7)";e<M.HEIGHT;)M.ctx2.moveTo(0,e),M.ctx2.lineTo(M.WIDTH,e),e+=5;for(M.ctx2.lineWidth=.15,M.ctx2.strokeStyle="rgba(255, 255, 255, 0.7)";t<M.HEIGHT;)M.ctx2.moveTo(0,t+1),M.ctx2.lineTo(M.WIDTH,t+1),t+=5;M.ctx2.stroke()},assignColumn:function(){var e=M.randomFromInterval(0,M.COLUMNS-1);return!!M.codes[e][0].open&&(M.codes[e][0].open=!1,e)},randomFromInterval:function(e,t){return Math.floor(Math.random()*(t-e+1)+e)},snapshot:function(){window.open(M.c.toDataURL())}};function eventListenerz(){var e=document.getElementsByClassName("toggle-info"),t=document.getElementById("info"),n=document.getElementById("snapshot");function o(e){e.preventDefault(),t.className="closed"===t.className?"":"closed"}for(var i=0;i<2;i++)e[i].addEventListener("click",o,!1);n.addEventListener("click",M.snapshot,!1)}window.onload=function(){M.init(),eventListenerz()};
-	</script>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Micro Market Mapping</title>
+    <meta name="description" content="XXX">
+    <meta name="author" content="XXX">
+    <meta name="contact" content="XXX">
+    <meta name="language" content="id">
+    <meta name="geo.country" content="id">
+    <meta name="geo.placename" content="Indonesia">
+    <!-- Mobile Progressive & Add to home screen -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#fff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#fff">
+    <meta name="apple-mobile-web-app-title" content="XXX">
+    <meta name="msapplication-TileImage" content="favicon.ico">
+    <meta name="msapplication-TileColor" content="#fff">
+    <link href='https://mappingmks.blogspot.com/favicon.ico' rel='icon' type='image/x-icon'/>
+    <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
+    <style>header.masthead {margin-bottom: 30px}.breadcrumb{font-size: small;font-family: verdana;margin-bottom: 40px}.bd-placeholder-img{font-size:1.125rem;text-anchor:middle}@media (min-width:768px){.bd-placeholder-img-lg{font-size:3.5rem}.navbar-nav li.nav-item a{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase}.navbar-nav li.nav-item{padding:10px 16px}}@media (max-width:576px){body{padding-top:5rem}samp,table{font-size:small}.navbar-nav li.nav-item a{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase}.judul-artikel{font-size:25px}}@media (min-width:576px){body{padding-top:6.5rem}}h1,h2,h3,h4,h5,h6{font-weight:800;font-size:20px;font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif}footer{padding:50px 0 65px}.ico{color:#6c757d;-webkit-transition:color .3s linear;-o-transition:color .3s linear;transition:color .3s linear}.ico:hover{-webkit-transition:color .1s linear;-o-transition:color .1s linear;transition:color .1s linear}.ico-twitter:hover{color:#56d7fe}.ico-youtube:hover{color:#dc3545}.ico-instagram:hover{color:#86574c}.ico-whatsapp:hover{color:#28a745}.ico-facebook:hover{color:#4867aa}.ico-gplus:hover{color:#de4a3c}.post-title>a{color:#212529;font-size:22px;transition:.2s}.post-title>a:hover{text-decoration:none;font-size:22px;color:#007bff;-webkit-transition:color .3s linear;-o-transition:color .3s linear;transition:color .3s linear}.btn-to-top{padding:8px;border-radius:5px 5px 0 0}#toTop{position:fixed;bottom:25px;right:25px;cursor:pointer;display:none;background-color:rgb(0,0,0,.5);color:#fff;opacity:.8}#toTop:hover{background-color:#333;opacity:1}.breadcrumb{font-size:small;font-family:verdana;padding:10px}.breadcrumb-item+.breadcrumb-item::before{display:inline-block;padding-right:.5rem;color:#6c757d;content:"»"}.floating-label-form-group{font-size:14px;position:relative;margin-bottom:0;padding-bottom:.5em;border-bottom:1px solid #dee2e6}.floating-label-form-group input,.floating-label-form-group textarea{font-size:1.5em;position:relative;z-index:1;padding:0;resize:none;border:none;border-radius:0;background:0 0;box-shadow:none!important;font-family:Lora,'Times New Roman',serif}.floating-label-form-group input::-webkit-input-placeholder,.floating-label-form-group textarea::-webkit-input-placeholder{color:#868e96;font-family:Lora,'Times New Roman',serif}.floating-label-form-group label{font-size:.85em;line-height:1.764705882em;position:relative;z-index:0;top:2em;display:block;margin:0;-webkit-transition:top .3s,opacity .3s;-moz-transition:top .3s,opacity .3s;-ms-transition:top .3s ease,opacity .3s ease;transition:top .3s,opacity .3s;vertical-align:baseline;opacity:0}.floating-label-form-group .help-block{margin:15px 0}.floating-label-form-group-with-value label{top:0;opacity:1}.floating-label-form-group-with-focus label{color:#0085a1}form .form-group:first-child .floating-label-form-group{border-top:1px solid #dee2e6}.navbar-nav li.nav-item a:hover{color:#fff!important}</style>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+</head>
+
+<body ng-app="myApp">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="">CPDK Kalimantan<br>
+            <span style="font-size: small;" class="d-none d-sm-block">Simulasi Bunga Kredit Pinjaman Micro Market Mapping</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://mappingmks.blogspot.com">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#!">Kredit</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#!kpr">KPR</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#!mobil">Mobil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#!kta">KTA</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Konten -->
+    <div ng-view></div>
+    
+    <hr>
+    <!-- Footer -->
+    <footer class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <ul class="list-inline text-center" id="sosmed">
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/" target="_blank" class="ico ico-facebook">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook-f fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/" target="_blank" class="ico ico-twitter">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="http://instagram.com/" target="_blank" class="ico ico-instagram">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+                <p class="copyright text-muted text-center">Copyright &copy; 2019 - <strong><a href="https://mappingmks.blogspot.com">CPDK Kalimantan</a><br>Micro Market Mapping</strong>. All rights reserved.<br><small>Developed by @cikal</small></p>
+            </div>
+        </div>
+    </footer>
+
+    
+    <script>
+    var app = angular.module("myApp", ["ngRoute"]);
+    app.config(function($routeProvider) {
+        $routeProvider
+        .when("/", {
+            templateUrl : "kredit.html",
+            controller: "KreditCtrl"
+        })
+        .when("/kpr", {
+            templateUrl : "kpr.html",
+            controller: "KprCtrl"
+        })
+        .when("/mobil", {
+            templateUrl : "mobil.html",
+            controller: "MobilCtrl"
+        })
+        .when("/kta", {
+            templateUrl : "kta.html",
+            controller: "KtaCtrl"
+        });
+    });
+
+    app.controller("KreditCtrl",["$scope","$filter",function(t,a){t.pinjam=12e7,t.tenor=24,t.bunga=8.6,t.sukuBunga="flat",t.nomApb=!0;var s=function(t,s){return a("currency")(t,"Rp ",2)};t.mulaiHitung=function(){switch(t.sukuBunga){case"flat":t.nomApb=!0,function(){var a=t.pinjam,p=t.tenor,m=t.bunga,h=a/p,e=a*m/12/100,n=h+e,o='<div class="table-responsive"><table id="tombolExp" class="table table-striped table-bordered table-sm" style="font-size:17px;text-align:right"><thead><tr><th>Angs</th><th>Angs Bunga</th><th>Angs Pokok</th><th>Total Angs</th><th>Sisa Pinjaman</th></tr></thead><tbody>';o+="<tr><th><samp>0</samp></th><th><samp>0</samp></th><th><samp>0</samp></th><th><samp>0</samp></th><th></samp>"+s(a)+"</samp></th></tr>";var d=0,l=a,r=0;do{l-=h,r+=e,o+="<tr><td><samp>"+ ++d+"</samp></td><td><samp>"+s(e)+"</samp></td><td><samp>"+s(h)+"</samp></td><td><samp>"+s(n)+"</samp></td><td><samp>"+s(l)+"</samp></td></tr>"}while(d<p);o+="</tbody><tfoot><tr><th>Total</th><th><samp>"+s(r)+"</samp></th><th><samp>"+s(a)+"</samp></th><th><samp>"+s(r+a)+"</samp></th><th><samp>0</samp></th></tr></tfoot></table></div>",$("#exampleModal").find("#hasil").html("").append(o),$("#exampleModal").on("shown.bs.modal",function(){$("#angpb").html(s(n)), setTimeout(()=>{$('#tombolExp').DataTable({retrieve: true, dom: 'Bfrtip',buttons: ['copy', 'csv', 'excel', 'pdf', 'print']})},1000)}), $("#exampleModal").modal("show")}();break;case"efektif":t.nomApb=!1,function(){var a=t.pinjam,p=t.tenor,h=t.bunga,e=a/p,n='<div class="table-responsive"><table id="tombolExp" class="table table-striped table-bordered table-sm" style="font-size:17px;text-align:right"><thead><tr><th>Angs</th><th>Angs Bunga</th><th>Angs Pokok</th><th>Total Angs</th><th>Sisa Pinjaman</th></tr></thead><tbody>';n+="<tr><th><samp>0</samp></th><th><samp>0</samp></th><th><samp>0</samp></th><th><samp>0</samp></th><th></samp>"+s(a)+"</samp></th></tr>";var o=0,d=a,l="",r=0;do{var i=m(a,p,h,++o);d-=e,l=i+e,r+=i,n+="<tr><td><samp>"+o+"</samp></td><td><samp>"+s(i)+"</samp></td><td><samp>"+s(e)+"</samp></td><td><samp>"+s(l)+"</samp></td><td><samp>"+s(d)+"</samp></td></tr>"}while(o<p);n+="</tbody><tfoot><tr><th>Total</th><th><samp>"+s(r)+"</samp></th><th><samp>"+s(a)+"</samp></th><th><samp>"+s(r+a)+"</samp></th><th><samp>0</samp></th></tr></tfoot></table></div>",$("#exampleModal").find("#hasil").html("").append(n),$("#exampleModal").modal("show")}();break;case"anuitas":t.nomApb=!0,function(){var a=[t.pinjam,t.tenor,t.bunga],m='<div class="table-responsive"><table id="tombolExp" class="table table-striped table-bordered table-sm" style="font-size:17px;text-align:right"><thead><tr><th>Angs</th><th>Angs Bunga</th><th>Angs Pokok</th><th>Total Angs</th><th>Sisa Pinjaman</th></tr></thead><tbody>';m+="<tr><th><samp>0</samp></th><th><samp>0</samp></th><th><samp>0</samp></th><th><samp>0</samp></th><th></samp>"+s(a[0])+"</samp></th></tr>";var h=0,e=a[0],n="",o=0;do{h++;var d=p(a[0],a[1],a[2]),l=e*(a[2]/12/100),r=d-l;e-=r,n=r+l,o+=l,m+="<tr><td><samp>"+h+"</samp></td><td><samp>"+s(l)+"</samp></td><td><samp>"+s(r)+"</samp></td><td><samp>"+s(n)+"</samp></td><td><samp>"+s(e)+"</samp></td></tr>"}while(h<a[1]);m+="</tbody><tfoot><tr><th>Total</th><th><samp>"+s(o)+"</samp></th><th><samp>"+s(a[0])+"</samp></th><th><samp>"+s(n+a[0])+"</samp></th><th><samp>0</samp></th></tr></tfoot></table></div>",$("#exampleModal").find("#hasil").html("").append(m),$("#exampleModal").modal("show"),$("#exampleModal").on("shown.bs.modal",function(){$("#angpb").html(s(n))})}()}};var p=function(t,a,s){var p=s/12/100;return t/((1-1/Math.pow(1+p,a))/p)};var m=function(t,a,s,p){return(t-(p-1)*(t/a))*s/12/100}}]);
+
+    app.controller("KprCtrl",["$scope",function(a){var p,r,n,o;a.harga=5e8,a.tenor=10,a.bunga=14.6,a.uangm=20,a.provi=1.5,a.appra=5e5,a.admin=45e4,a.notar=12e6,a.asura=75e5,a.pajak=6e7,a.uangmRp=a.harga*a.uangm/100,a.plafon=a.harga-a.uangmRp,a.bphtb=5*(a.harga-a.pajak)/100,a.totBiPa=a.plafon*a.provi/100+a.appra+a.admin+a.notar+a.asura+a.bphtb,a.angPeriod=(p=a.plafon,r=12*a.tenor,n=a.bunga,o=n/12/100,p/((1-1/Math.pow(1+o,r))/o))}]);
+
+    app.controller("MobilCtrl",["$scope",function(o){o.otr=25e7,o.dp=30,o.tenor=5,o.bunga=4.8,o.asuransi=5,o.provisi=.5,o.polisAsuransi=4e4,o.administrasi=7e5,o.dpRp=o.otr*o.dp/100,o.provisiRp=(o.otr-o.otr*o.dp/100)*o.provisi/100,o.angPokPB=(o.otr-o.dpRp)/(12*o.tenor),o.angBungPB=(o.otr-o.dpRp)*(o.bunga/12)/100}]);
+
+    app.controller("KtaCtrl",["$scope",function(n){n.pinjam=12e6,n.tenor=24,n.bunga=10}]);
+    </script>
+    <script type="text/ng-template" id="kredit.html">
+        <!-- Header -->
+        <header class="container mb-3" ng-controller="KreditCtrl">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <!-- Breadcrumb -->
+                    <h3 class="text-danger mt-2"><i class="fa fa-newspaper-o fa-fw"></i> Kalkulator Kredit</h3>
+                    <hr>
+                    <div class="card border-secondary">
+                        <div class="card-body">
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Jumlah pinjaman</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!pinjam"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="pinjam"><em>{{pinjam | currency:"Rp "}}</em></span>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Rp</span>
+                                        </div>
+                                        <input type="number" class="form-control" placeholder="0" ng-model="pinjam" aria-describedby="basic-addon1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Lama pinjaman (Tenor)</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!tenor"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="tenor"><em>= {{tenor / 12 | number:1}} tahun</em></span>
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" placeholder="0" ng-model="tenor" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2">Bulan</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Bunga per Tahun</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!bunga"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="bunga"><em>= {{bunga/12|number:2}}% / bulan</em></span>
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" placeholder="0" ng-model="bunga" aria-describedby="basic-addon3">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon3">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Perhitungan Suku Bunga</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!bunga"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="bunga"><em>{{sukuBunga | uppercase}}</em></span>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon3">Pilih</span>
+                                        </div>
+                                        <select class="form-control" ng-model="sukuBunga">
+                                            <option value="flat">FLAT</option>
+                                            <option value="efektif">EFEKTIF</option>
+                                            <option value="anuitas">ANUITAS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" ng-click="mulaiHitung()">Kalkulasi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-capitalize" id="exampleModalLabel">Kalkulasi Bunga {{sukuBunga}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <h2>Data anda</h2>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td width="50%">Jumlah Pinjaman</td>
+                                            <td>{{pinjam | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lama Pinjaman (Tenor)</td>
+                                            <td>{{tenor}} bulan</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bunga per Tahun <strong>{{bunga}}%</strong></td>
+                                            <td>{{bunga / 12 | number:2}}% per bulan</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot ng-if="nomApb">
+                                        <tr>
+                                            <th>Angsuran per Bulan</th>
+                                            <th id="angpb">?</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <h2>Hasil Kalkulasi</h2>
+                                <div id="hasil"></div>
+                                <div class="alert alert-warning mt-5" role="alert"><strong>Perhatian:</strong> Ini adalah simulasi belaka, harap pergunakan dengan bijak.</div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </script>
+
+    <script type="text/ng-template" id="kpr.html">
+        <!-- Header -->
+        <header class="container mb-3" ng-controller="KprCtrl">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <!-- Breadcrumb -->
+                    <h3 class="text-danger mt-2"><i class="fa fa-home fa-fw"></i> Simulasi Kredit Pemilikan Rumah (KPR)</h3>
+                    <hr>
+                    <div class="card border-secondary mb-4">
+                        <div class="card-body">
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Harga Rumah</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!harga"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="harga"><em>{{harga | currency:"Rp "}}</em></span>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Rp</span>
+                                        </div>
+                                        <input type="number" class="form-control" placeholder="0" ng-model="harga" aria-describedby="basic-addon1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Lama Kredit (Tenor)</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!tenor"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="tenor"><em>= {{tenor * 12}} bulan</em></span>
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" placeholder="0" ng-model="tenor" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2">Tahun</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Bunga Pinjaman</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!bunga"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="bunga"><em>= {{bunga / 12 | number:2}} % / bulan</em></span>
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" placeholder="0" ng-model="bunga" aria-describedby="basic-addon3">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon3">% / tahun</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Uang Muka (DP)</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!uangm"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="uangm"><em>= {{harga * uangm / 100  | currency:"Rp "}}</em></span>
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" placeholder="0" ng-model="uangm" aria-describedby="basic-addon4">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon4">% dari harga Rumah</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4 class="text-center">Biaya Bank</h4>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Biaya Provisi</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!provi"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="provi"><em>= {{(harga - (harga * uangm / 100)) * provi / 100 | currency:"Rp "}}</em></span>
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" placeholder="0" ng-model="provi" aria-describedby="basic-addon5">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon5">% dari plafon</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Biaya Appraisal</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!appra"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="appra"><em>{{appra | currency:"Rp "}}</em></span>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon6">Rp</span>
+                                        </div>
+                                        <input type="number" class="form-control" placeholder="0" ng-model="appra" aria-describedby="basic-addon6">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Biaya Administrasi</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!admin"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="admin"><em>{{admin | currency:"Rp "}}</em></span>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon7">Rp</span>
+                                        </div>
+                                        <input type="number" class="form-control" placeholder="0" ng-model="admin" aria-describedby="basic-addon7">
+                                    </div>
+                                </div>
+                            </div>
+                            <h4 class="text-center">Biaya Lain</h4>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Biaya Notaris</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!notar"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="notar"><em>{{notar | currency:"Rp "}}</em></span>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon8">Rp</span>
+                                        </div>
+                                        <input type="number" class="form-control" placeholder="0" ng-model="notar" aria-describedby="basic-addon8">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Biaya Asuransi</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!asura"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="asura"><em>{{asura | currency:"Rp "}}</em></span>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon9">Rp</span>
+                                        </div>
+                                        <input type="number" class="form-control" placeholder="0" ng-model="asura" aria-describedby="basic-addon9">
+                                    </div>
+                                </div>
+                            </div>
+                            <h4 class="text-center">Pajak</h4>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>NJOPTKP/NPTKP <span class="text-danger">**</span></label>
+                                    <span class="help-block text-danger pull-right" ng-if="!pajak"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="pajak"><em>{{pajak | currency:"Rp "}}</em></span>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon10">Rp</span>
+                                        </div>
+                                        <input type="number" class="form-control" placeholder="0" ng-model="pajak" aria-describedby="basic-addon10">
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-danger"><sub><em>** Nilai yang tidak kena pajak; tiap daerah berbeda dan berubah sejalan waktu; contoh untuk DKI Rp 60juta, Bekasi & Tangerang Rp 30juta, Depok Rp 20juta, dll.</em></sub></p>
+                            <br>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Kalkulasi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Kalkulasi Kredit Pemilikan Rumah</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <h2>Data Pinjaman anda</h2>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td width="50%">Harga Rumah</td>
+                                            <td>{{harga | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Uang Muka (DP) <strong>{{uangm}}%</strong></td>
+                                            <td>{{harga * uangm / 100 | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lama Kredit (Tenor) <strong>{{tenor}} tahun</strong></td>
+                                            <td>{{tenor * 12}} bulan</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bunga <strong>{{bunga}}%</strong> per tahun</td>
+                                            <td>{{bunga / 12 | number:2}}% per bulan</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Perhitungan Bunga</td>
+                                            <td><strong>Anuitas</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <h2>KPR anda</h2>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td width="50%">Plafon Pinjaman<br><sub>(Harga Rumah - Uang Muka)</sub></td>
+                                            <td>{{plafon | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Angsuran per Periode</td>
+                                            <td>{{angPeriod | currency:"Rp "}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Total Periode</th>
+                                            <th>{{tenor * 12}} bulan</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <h2>Biaya dan Pajak</h2>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td width="50%">Biaya Provisi</td>
+                                            <td>{{plafon * provi / 100 | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Biaya Appraisal</td>
+                                            <td>{{appra | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Biaya Administrasi</td>
+                                            <td>{{admin | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Biaya Notaris</td>
+                                            <td>{{notar | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Biaya Asuransi</td>
+                                            <td>{{asura | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pajak Pembeli / BPHTB<br><sub>(5% x (Harga Jual - NJOPTKP/NPTKP))</sub></td>
+                                            <td>{{bphtb | currency:"Rp "}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Total Biaya &amp; Pajak</th>
+                                            <th>{{totBiPa | currency:"Rp "}}</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <h2>Pembayaran Pertama Kali</h2>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td width="50%">Uang Muka (DP)</td>
+                                            <td>{{harga * uangm / 100 | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total biaya dan Pajak</td>
+                                            <td>{{totBiPa | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Angsuran Pertama</td>
+                                            <td>{{angPeriod | currency:"Rp "}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Total Pembayaran Pertama</th>
+                                            <th>{{(harga * uangm / 100) + totBiPa + angPeriod | currency:"Rp "}}</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Pembayaran Selanjutnya</th>
+                                            <th>{{angPeriod | currency:"Rp "}} (<strong>{{tenor * 12 - 1}}x</strong>)</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="alert alert-warning mt-5" role="alert"><strong>Perhatian:</strong> Ini adalah simulasi belaka, harap pergunakan dengan bijak.</div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </script>
+
+    <script type="text/ng-template" id="mobil.html">
+        <!-- Header -->
+        <header class="container mb-3">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <!-- Breadcrumb -->
+                    <h3 class="text-danger mt-2"><i class="fa fa-car fa-fw"></i> Simulasi Kredit Mobil (Kendaraan Bermotor)</h3>
+                    <hr>
+                    <div class="card border-secondary mb-4">
+                        <div class="card-body">
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Harga Mobil OTR</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!otr"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="otr"><em>{{otr | currency:"Rp "}}</em></span>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Rp</span>
+                                        </div>
+                                        <input type="number" class="form-control" placeholder="0" ng-model="otr" aria-describedby="basic-addon1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Uang Muka (DP)</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!dp"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="dp"><em>= {{otr * dp / 100 | currency:"Rp "}}</em></span>
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" placeholder="0" ng-model="dp" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2">% dari harga OTR</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Lama Kredit (Tenor)</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!tenor"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="tenor"><em>= {{tenor * 12}} bulan</em></span>
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" placeholder="0" ng-model="tenor" aria-describedby="basic-addon3">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon3">Tahun</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Bunga pinjaman (FLAT)</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!bunga"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="bunga"><em>= {{bunga / 12 | number:2}} % / bulan</em></span>
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" placeholder="0" ng-model="bunga" aria-describedby="basic-addon4">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon4">% / tahun</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4 class="text-center">Biaya Lain</h4>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Biaya Asuransi</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!asuransi"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="asuransi"><em>= {{ otr * asuransi / 100 | currency:"Rp "}}</em></span>
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" placeholder="0" ng-model="asuransi" aria-describedby="basic-addon5">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon5">% dari harga OTR</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Biaya Provisi</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!provisi"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="provisi"><em>= {{provisiRp | currency:"Rp "}}</em></span>
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" placeholder="0" ng-model="provisi" aria-describedby="basic-addon6">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon6">% dari plafon</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Biaya Polis Asuransi</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!polisAsuransi"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="polisAsuransi"><em>{{polisAsuransi | currency:"Rp "}}</em></span>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon7">Rp</span>
+                                        </div>
+                                        <input type="number" class="form-control" placeholder="0" ng-model="polisAsuransi" aria-describedby="basic-addon7">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Biaya Administrasi</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!administrasi"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="administrasi"><em>{{administrasi | currency:"Rp "}}</em></span>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon8">Rp</span>
+                                        </div>
+                                        <input type="number" class="form-control" placeholder="0" ng-model="administrasi" aria-describedby="basic-addon8">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Kalkulasi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Kalkulasi Kredit Mobil</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <h2>Data anda</h2>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td width="50%">Harga Mobil OTR</td>
+                                            <td>{{otr | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Uang Muka (DP) <strong>{{dp}}%</strong></td>
+                                            <td>{{otr * dp / 100 | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lama Kredit (Tenor) <strong>{{tenor}} tahun</strong></td>
+                                            <td>{{tenor * 12}} bulan</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <h2>Plafon Kredit anda</h2>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td width="50%">Harga Mobil OTR</td>
+                                            <td>{{otr | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Uang Muka (DP)</td>
+                                            <td>{{dpRp | currency:"Rp "}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Plafon kredit anda</th>
+                                            <th>{{otr - dpRp | currency:"Rp "}}</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <h2>Biaya Lain-lain</h2>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td width="50%">Asuransi <strong>{{asuransi}}%</strong> dari harga OTR</td>
+                                            <td>{{otr * asuransi / 100 | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Provisi</td>
+                                            <td>{{provisiRp | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Polis Asuransi</td>
+                                            <td>{{polisAsuransi | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Administrasi</td>
+                                            <td>{{administrasi | currency:"Rp "}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Total biaya lain-lain</th>
+                                            <th>{{(otr * asuransi / 100) + provisiRp + polisAsuransi + administrasi | currency:"Rp "}}</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <h2>Angsuran per Bulan</h2>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td width="50%">Angsuran Pokok per Bulan</td>
+                                            <td>{{angPokPB | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Angsuran Bunga per Bulan</td>
+                                            <td>{{angBungPB | currency:"Rp "}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Total Angsuran per Bulan</th>
+                                            <th>{{angPokPB + angBungPB | currency:"Rp "}}</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <h2>Pembayaran Pertama Kali</h2>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td width="50%">Uang Muka (DP)</td>
+                                            <td>{{dpRp | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Angsuran Pertama</td>
+                                            <td>{{angPokPB + angBungPB | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total biaya lain-lain</td>
+                                            <td>{{(otr * asuransi / 100) + provisiRp + polisAsuransi + administrasi | currency:"Rp "}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Total Pembayaran Pertama</th>
+                                            <th>{{dpRp + (angPokPB + angBungPB) + (otr * asuransi / 100) + provisiRp + polisAsuransi + administrasi | currency:"Rp "}}</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Pembayaran Selanjutnya</th>
+                                            <th>{{angPokPB + angBungPB | currency:"Rp "}} (<strong>{{tenor * 12 - 1}}x</strong>)</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="alert alert-warning mt-5" role="alert"><strong>Perhatian:</strong> Ini adalah simulasi belaka, harap pergunakan dengan bijak.</div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </script>
+
+    <script type="text/ng-template" id="kta.html">
+        <!-- Header -->
+        <header class="container mb-3" ng-controller="KtaCtrl">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <!-- Breadcrumb -->
+                    <h3 class="text-danger mt-2"><i class="fa fa-rocket fa-fw"></i> Simulasi Simulasi Kredit Tanpa Agunan (KTA)</h3>
+                    <hr>
+                    <div class="card border-secondary mb-4">
+                        <div class="card-body">
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Pengajuan pinjaman</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!pinjam"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="pinjam"><em>{{pinjam | currency:"Rp "}}</em></span>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Rp</span>
+                                        </div>
+                                        <input type="number" class="form-control" placeholder="0" ng-model="pinjam" aria-describedby="basic-addon1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Lama pinjaman (Tenor)</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!tenor"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="tenor"><em>= {{tenor / 12 | number:1}} tahun</em></span>
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" placeholder="0" ng-model="tenor" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2">Bulan</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label>Bunga per Tahun</label>
+                                    <span class="help-block text-danger pull-right" ng-if="!bunga"><em>Tidak boleh kosong !</em></span>
+                                    <span class="help-block text-success pull-right" ng-if="bunga"><em>= {{bunga/12|number:2}}% / bulan</em></span>
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" placeholder="0" ng-model="bunga" aria-describedby="basic-addon3">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon3">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Kalkulasi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Kalkulasi KTA</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <h2>Data anda</h2>
+                                <table class="table">
+                                    <tr>
+                                        <td width="50%">Pengajuan Pinjaman</td>
+                                        <td>{{pinjam|currency:"Rp "}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lama Pinjaman (Tenor)</td>
+                                        <td>{{tenor}} bulan</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bunga per Tahun <strong>{{bunga}}%</strong></td>
+                                        <td>{{bunga / 12 | number:2}}% per bulan</td>
+                                    </tr>
+                                </table>
+                                <h2>Hasil Kalkulasi</h2>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td width="50%">Angsuran Pokok</td>
+                                            <td>{{pinjam / tenor | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bunga Angsuran per bulan</td>
+                                            <td>{{pinjam * bunga / 100 / 12 | currency:"Rp "}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Total Angsuran per bulan</th>
+                                            <th>{{(pinjam / tenor) + (pinjam * bunga / 100 / 12) | currency:"Rp "}}</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <h2>Ringkasan Hasil Kalkulasi</h2>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td width="50%">Pengajuan Pinjaman</td>
+                                            <td>{{pinjam | currency:"Rp "}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total Bunga Pinjaman</td>
+                                            <td>{{((pinjam / tenor) + (pinjam * bunga / 100 / 12)) * tenor - pinjam | currency:"Rp "}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Total yang harus dibayar</th>
+                                            <th>{{((pinjam / tenor) + (pinjam * bunga / 100 / 12)) * tenor | currency:"Rp "}}</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="alert alert-warning mt-5" role="alert"><strong>Perhatian:</strong> Ini adalah simulasi belaka, harap pergunakan dengan bijak.</div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </script>
+    
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom scripts for this template -->
+    <script>
+        $("#exampleModal").on("shown.bs.modal", function(e) {
+            console.log('jalan')
+            $('#tombolExp').DataTable({
+                retrieve: true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            })
+        })
+
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        })
+
+        $("body").append('<div id="toTop" class="btn-to-top" data-toggle="tooltip" data-placement="top" title="back to top"><i class="fa fa-chevron-up"></i></div>'),$(window).scroll(function(){$(this).scrollTop()>50?($("#toTop").fadeIn(),$("nav.navbar").removeClass("bg-dark").addClass("bg-primary")):($("#toTop").fadeOut(),$("nav.navbar").removeClass("bg-primary").addClass("bg-dark"))}),$("#toTop").click(function(){$("html, body").animate({scrollTop:0},600)});
+
+        $("body").on("input propertychange", ".floating-label-form-group", function(e) {
+            $(this).toggleClass("floating-label-form-group-with-value", !!$(e.target).val());
+        }).on("focus", ".floating-label-form-group", function() {
+            $(this).addClass("floating-label-form-group-with-focus");
+        }).on("blur", ".floating-label-form-group", function() {
+            $(this).removeClass("floating-label-form-group-with-focus");
+        });
+    </script>
 </body>
+
 </html>
