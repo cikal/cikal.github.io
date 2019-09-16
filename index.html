@@ -7,7 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="mobile-web-app-capable" content="true">
     <meta name="theme-color" content="#FFC000">
-    <title>Document</title>
+    <meta name="author" content="ian cikal">
+    <meta name="description" content="Hari bahagia 3D">
+    <title>3D Crew</title>
     <style>
         @font-face {
             font-family: "MenschRegular";
@@ -71,8 +73,8 @@
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             // Output the result in an element with id="demo"
-            document.getElementById("demo").innerHTML = days + "<sup>d</sup> " + hours + "<sup>h</sup> "
-                + minutes + "<sup>m</sup> " + seconds + "<sup>s</sup> ";
+            document.getElementById("demo").innerHTML = ((days > 9) ? days : "0" + days) + "<sup>d</sup> " + ((hours > 9) ? hours : "0" + hours) + "<sup>h</sup> "
+                + ((minutes > 9) ? minutes : "0" + minutes) + "<sup>m</sup> " + ((seconds > 9) ? seconds : "0" + seconds) + "<sup>s</sup> ";
 
             // If the count down is over, write some text 
             if (distance < 0) {
