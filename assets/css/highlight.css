@@ -27,7 +27,7 @@ pre.highlight {
   border: 2px solid #e8e8e8;
   overflow: auto;
   margin-bottom: 20px;}
-  .highlighter-rouge .highlight {
+  .highlighter-rouge pre.highlight {
     background: #eef; }
   .highlight .c {
     color: #998;
