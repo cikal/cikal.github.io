@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Tentang Cikal Studio
+title: Tentang Cikal
 permalink: /about/
 ---
 Selamat datang di blog Cikal.
