@@ -13,7 +13,7 @@ Cikal adalah sebutan untuk anak pertama dalam keluarga kami, hanya sebuah panggi
 
 Sederhana nya, blog ini adalah tempat menggali / eksplorasi kemampuan Otak dalam mencerna dan mengolah logika, algoritma dan studi kasus sebuah case / project. Dan sebagai sarana berbagi pengalaman seputar bahasa pemrograman, dengan semangat Open Source.
 
-_Ingin menjumpai saya di media sosial..?_ **atau** _Anda punya project dan berniat untuk Hire saya..? :)_
+> _Ingin menjumpai saya di media sosial..?_ **atau** _Anda punya project dan berniat untuk Hire saya..? :)_
 
 Boleh saja..
 
