@@ -1,88 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="mobile-web-app-capable" content="true">
-    <meta name="theme-color" content="#FFC000">
-    <meta name="author" content="ian cikal">
-    <meta name="description" content="Hari bahagia 3D">
-    <title>3D Crew</title>
-    <style>
-        @font-face {
-            font-family: "MenschRegular";
-            src: url("fonts/mensch-wf.eot?") format("eot"), url("fonts/mensch-wf.woff2") format("woff2"), url("fonts/mensch-wf.woff") format("woff"), url("fonts/mensch-wf.ttf") format("truetype"), url("fonts/mensch-wf.svg#MenschRegular") format("svg");
-        }
-
-        * {
-            padding: 0;
-            margin: 0;
-        }
-
-        body {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            position: absolute;
-            background-color: #404040;
-        }
-
-        #demo {
-            font-size: 80px;
-            color: #FFC000;
-            font-family: MenschRegular;
-        }
-
-        sup {
-            font-size: 42px;
-            padding-left: 6px;
-            color: #fff;
-        }
-
-        @media screen and (max-width: 576px) {
-            body {
-                text-align: center
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-    <div id="demo"></div>
-
-    <script>
-        // Set the date we're counting down to
-        var countDownDate = new Date("Sep 27, 2019 09:00:00").getTime();
-
-        // Update the count down every 1 second
-        var x = setInterval(function () {
-
-            // Get today's date and time
-            var now = new Date().getTime();
-
-            // Find the distance between now and the count down date
-            var distance = countDownDate - now;
-
-            // Time calculations for days, hours, minutes and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            // Output the result in an element with id="demo"
-            document.getElementById("demo").innerHTML = ((days > 9) ? days : "0" + days) + "<sup>d</sup> " + ((hours > 9) ? hours : "0" + hours) + "<sup>h</sup> "
-                + ((minutes > 9) ? minutes : "0" + minutes) + "<sup>m</sup> " + ((seconds > 9) ? seconds : "0" + seconds) + "<sup>s</sup> ";
-
-            // If the count down is over, write some text 
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("demo").innerHTML = "EXPIRED";
-            }
-        }, 1000);
-    </script>
-</body>
-
-</html>
+---
+layout: default
+---
+<div class="container">
+  <section class="main-heading">
+    <h1 class="site-title">{{ site.title }}</h1>
+    <p class="lead">{{ site.description }}</p>
+  </section>
+  <section class="recent-posts">
+    <div class="section-title"><h2><span>All Stories</span></h2></div>
+    <div class="row row-cols-1 row-cols-md-3">
+      {% for post in paginator.posts %}
+      <div class="col mb-4">
+        <div class="card h-100">
+          <a href="{{ post.url | prepend: site.baseurl }}">
+            {% if post.thumbnail %}
+            <img src="{{ post.thumbnail }}" class="card-img-top" alt="{{ post.title }}">
+            {% elsif post.images %}
+            <img src="{{ post.images }}" class="card-img-top" alt="{{ post.title }}">
+            {% else %}
+            <img src="/logo.jpg" class="card-img-top" alt="{{ post.title }}">
+            {% endif %}
+          </a>
+          <div class="card-body pb-0">
+            <h5 class="card-title"><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h5>
+            <p class="card-text">{{ post.excerpt }}</p>
+            <p>{% if post.tags %}
+              {% for tag in post.tags limit:4 %}<span class="badge badge-pill badge-primary">{{ tag }}</span> {% endfor %}
+            {% endif %}</p>
+          </div>
+          <div class="card-footer">
+            {{ post.date | date: "%-d %b %Y" }} &bull; {{ post.timeread }} read &bull; 
+            {% if post.comments %}
+            <a href="{{ post.url | prepend: site.baseurl }}#disqus_thread">Comments</a>
+            {% else %}
+            <span class="post-read">Comments not available</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  <br><hr>
+  <nav aria-label="Site Pagination">
+    <ul class="pagination">
+      {% if paginator.total_pages > 1 %}
+        {% if paginator.previous_page %}
+          <li class="page-item"><a class="page-link" href="{{ paginator.previous_page_path | relative_url }}">Prev</a></li>
+        {% else %}
+          <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Prev</a></li>
+        {% endif %}
+        {% for page in (1..paginator.total_pages) %}
+          {% if page == paginator.page %}
+            <li class="page-item active" aria-current="page">
+              <span class="page-link">{{ page }}<span class="sr-only">(current)</span></span>
+            </li>
+          {% elsif page == 1 %}
+            <li class="page-item">
+              <a class="page-link" href="{{ paginator.previous_page_path | relative_url }}">{{ page }}</a>
+            </li>
+          {% else %}
+            <li class="page-item">
+              <a class="page-link" href="{{ site.paginate_path | relative_url | replace: ':num', page }}">{{ page }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+        {% if paginator.next_page %}
+          <li class="page-item">
+            <a class="page-link" href="{{ paginator.next_page_path | relative_url }}">Next</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+          </li>
+        {% endif %}
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+{% include footer.html %}
+{% if site.disqus_shortname %}
+<script id="dsq-count-scr" src="https://{{ site.disqus_shortname }}.disqus.com/count.js" async></script>
+{% endif %}

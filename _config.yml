@@ -1,0 +1,44 @@
+# Site settings
+title: Cikal
+email: cikaldev@gmail.com
+description: Simple but not simpler.
+baseurl: ""
+url: "https://cikal.github.io"
+author: "Ian Cikal"
+
+# Google
+site_verification: b5y-j7ghbmmM-BkDlp7_tP3mOYXCPXA7C1bRnkbK-Mc
+analytics: UA-71959830-1
+#adsense: coming-soon
+
+# Social
+github_username: cikal
+facebook_username: cikal.ard
+twitter_username: cikalstudio
+instagram_username: ayh__ian
+
+# Comments
+disqus_shortname: cikalard
+
+# Build settings
+markdown: kramdown
+
+# More › http://kramdown.gettalong.org/quickref.html
+# Options › http://kramdown.gettalong.org/options.html
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
+
+# Gems
+gems: [ jekyll-paginate ]
+
+# Pagination
+paginate: 6
+paginate_path: "/page:num/"
