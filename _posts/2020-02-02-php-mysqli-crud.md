@@ -25,7 +25,7 @@ Baiklah tanpa berpanjang lebar lagi, mari kita langsung ke poin tutorial Belajar
 * Nyalakan server lokal anda
 * Buat Database baru
   * Buat sebuah Tabel baru
-* Download Bootstrap [disini](https://getbootstrap.com/3.3/)
+* Download Bootstrap [disini](https://getbootstrap.com/3.3/){:target='blank'}
 * Buka text editor anda
   * Ada 6 (enam) file yang akan kita buat pada tutorial ini :
     1. `koneksi.php`, file koneksi php ke database
