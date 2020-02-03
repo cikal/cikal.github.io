@@ -25,7 +25,7 @@ Baiklah tanpa berpanjang lebar lagi, mari kita langsung ke poin tutorial Belajar
 * Nyalakan server lokal anda
 * Buat Database baru
   * Buat sebuah Tabel baru
-* Download Bootstrap [disini](https://getbootstrap.com/3.3/){:target='blank'}
+* Download Bootstrap [disini](https://getbootstrap.com/docs/3.4/getting-started/){:target='blank'}
 * Buka text editor anda
   * Ada 6 (enam) file yang akan kita buat pada tutorial ini :
     1. `koneksi.php`, file koneksi php ke database
@@ -117,7 +117,7 @@ _**Info** Penjelasan Kode `koneksi.php`_
 2. Pada baris ke-8, kita melakukakn inisialisasi koneksi PHP ke MySQL dengan bantuan [MySQLi Driver](https://www.php.net/manual/en/class.mysqli.php){:target='blank'}.
   * `$conn = new mysqli(host, user, pass, database);`
 3. Pada baris (12-14) kita melakukan pengecekan, jika ada kesalahan / typo. Maka pesan error akan muncul.
-4. Pada baris (17-47) ini adalah template dengan menggunakan [Bootstrap](https://getbootstrap.com/3.3/){:target='blank'} untuk mempermudah pembuatan struktur HTML dan mempercantik tampilan.
+4. Pada baris (17-47) ini adalah template dengan menggunakan [Bootstrap](https://getbootstrap.com/docs/3.4/getting-started/#examples){:target='blank'} untuk mempermudah pembuatan struktur HTML dan mempercantik tampilan.
   * `template_header()` untuk membuat struktur bagian atas
   * `template_footer()` untuk membuat struktur bagian bawah / tag penutup
 
