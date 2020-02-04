@@ -8,7 +8,7 @@ thumbnail: "/assets/img/thumbnail/php-mysql.jpg"
 timeread: 20 min
 excerpt_separator: <!--more-->
 comments: true
-comment_button: true
+comment_button: false
 related: true
 ---
 Sesuai dengan judul yang ada di atas, hari ini saya akan share cara membuat program CRUD sederhana dengan menggunakan bahasa <!--more-->program PHP dan database MySQL / Maria DB.
@@ -19,13 +19,14 @@ CRUD merupakan akronim / singkatan dari **C**reate **R**ead **U**pdate dan **D**
 
 Baiklah tanpa berpanjang lebar lagi, mari kita langsung ke poin tutorial Belajar CRUD Sederhana PHP - MySQL.
 
+---
 
 ### Persiapan
 
 * Nyalakan server lokal anda
 * Buat Database baru
   * Buat sebuah Tabel baru
-* Download Bootstrap [disini](https://getbootstrap.com/docs/3.4/getting-started/){:target='blank'}
+* Download Bootstrap [disini](https://getbootstrap.com/3.3/){:target='blank'}
 * Buka text editor anda
   * Ada 6 (enam) file yang akan kita buat pada tutorial ini :
     1. `koneksi.php`, file koneksi php ke database
@@ -35,6 +36,8 @@ Baiklah tanpa berpanjang lebar lagi, mari kita langsung ke poin tutorial Belajar
     5. `delete.php`, berfungsi untuk hapus data
     6. `index.php`, berfungsi untuk navigasi halaman
 * Secangkir Kopi dan cemilan.
+
+---
 
 #### Pembuatan Database dan Tabel
 
@@ -50,6 +53,8 @@ CREATE TABLE `tb_kontak` (
   `email` VARCHAR(30)
 );
 ```
+
+---
 
 #### File Koneksi PHP ke MySQL
 
@@ -117,7 +122,7 @@ _**Info** Penjelasan Kode `koneksi.php`_
 2. Pada baris ke-8, kita melakukakn inisialisasi koneksi PHP ke MySQL dengan bantuan [MySQLi Driver](https://www.php.net/manual/en/class.mysqli.php){:target='blank'}.
   * `$conn = new mysqli(host, user, pass, database);`
 3. Pada baris (12-14) kita melakukan pengecekan, jika ada kesalahan / typo. Maka pesan error akan muncul.
-4. Pada baris (17-47) ini adalah template dengan menggunakan [Bootstrap](https://getbootstrap.com/docs/3.4/getting-started/#examples){:target='blank'} untuk mempermudah pembuatan struktur HTML dan mempercantik tampilan.
+4. Pada baris (17-47) ini adalah template dengan menggunakan [Bootstrap](https://getbootstrap.com/3.3/){:target='blank'} untuk mempermudah pembuatan struktur HTML dan mempercantik tampilan.
   * `template_header()` untuk membuat struktur bagian atas
   * `template_footer()` untuk membuat struktur bagian bawah / tag penutup
 
