@@ -46,9 +46,7 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav ml-auto">
           {% for my_page in site.pages %}
-          {% if my_page.permalink != "/about/" && my_page.url != "manifest.json" %}
           <li class="nav-item"><a class="nav-link" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a></li>
-          {% endif %}
           {% endfor %}
           <li class="nav-item"><a class="nav-link" href="/about/">Tentang</a></li>
         </ul>

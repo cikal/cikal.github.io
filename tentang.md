@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Tentang Cikal
-permalink: /about/
+title: Tentang
+permalink: /tentang/
 ---
 Selamat datang di blog Cikal.
 
