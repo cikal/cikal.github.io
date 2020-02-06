@@ -2,7 +2,7 @@
 layout: post
 title: "Hello world!"
 date: 2020-01-01 23:55:03 +0700
-categories: [jekyll, update]
+categories: general
 tags: [Opinion, Github-Pages, Jekyll]
 timeread: 3 sec
 excerpt_separator: <!--more-->

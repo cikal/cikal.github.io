@@ -42,3 +42,6 @@ gems: [ jekyll-paginate ]
 # Pagination
 paginate: 6
 paginate_path: "/page:num/"
+
+# Permalink
+permalink: pretty

@@ -2,8 +2,8 @@
 layout: post
 title: "Membuat Form Pencarian dengan AJAX & PHP"
 date: 2020-02-05 00:31:15 +0700
-categories: [php, mysql, javascript]
-tags: [php, mysql, javascript, ajax]
+categories: javascript
+tags: [php, mysql, javascript, ajax, fetch]
 images: "/assets/img/php-mysql-ajax-pencarian-1.png"
 thumbnail: "/assets/img/thumbnail/php-mysql-ajax-pencarian-1.png"
 timeread: 20 min

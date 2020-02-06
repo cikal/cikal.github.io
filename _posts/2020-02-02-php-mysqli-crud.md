@@ -2,7 +2,7 @@
 layout: post
 title: "Belajar CRUD Sederhana PHP - MySQL"
 date: 2020-02-02 19:18:00 +0700
-categories: [php, mysql]
+categories: php
 tags: [php, mysql, crud]
 thumbnail: "/assets/img/thumbnail/php-mysql.jpg"
 timeread: 20 min
