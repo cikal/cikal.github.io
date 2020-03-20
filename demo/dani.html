@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Ian Cikal"> 
+  <meta name="description" content="nih kang demo nya">
+  <title>Lerpong</title>
+  <style>
+    body {
+      font-family: Verdana, Arial, sans-serif;
+      background-color: #000;
+    }
+
+    h1 {
+      color: #fff;
+      font-size: 70px;
+      line-height: 1.5;
+    }
+
+    .outline {
+      -webkit-text-stroke: 1px #fff;
+      color: transparent;
+      transition: .3s;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      transition: .3s;
+    }
+
+    a:hover {
+      color: lime;
+    }
+
+    a:hover > .outline {
+      -webkit-text-stroke: 1px lime;
+    }
+
+    .anim-underline {
+      display: inline-block;
+    }
+
+    .anim-underline:after {
+      content: '';
+      width: 0px;
+      height: 6px;
+      display: block;
+      background: yellow;
+      transition: .3s;
+    }
+
+    .anim-underline:hover:after {
+      width: 100%;
+    }
+
+    .container {
+      padding: 24px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>
+      <a href=""><span class="outline anim-underline">JajanVisual*</span></a> / 
+      <a href=""><span class="anim-underline">JajanWeb*</span></a> / 
+      <a href=""><span class="anim-underline">JajanContent*</span></a> / 
+      <a href=""><span class="anim-underline">JajanMerch*</span></a>
+    </h1>
+  </div>
+
+</body>
+
+</html>
