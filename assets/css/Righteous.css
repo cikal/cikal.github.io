@@ -1,9 +1,0 @@
-@font-face {
-    font-family: 'Righteous';
-    src: local('Righteous'), local('Righteous-Regular'),
-        url('../fonts/Righteous-Regular.woff2') format('woff2'),
-        url('../fonts/Righteous-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-

@@ -1,84 +1,20 @@
----
-layout: default
----
-<div class="container">
-  <section class="main-heading">
-    <h1 class="site-title">{{ site.title }}</h1>
-    <p class="lead">{{ site.description }}</p>
-  </section>
-  <section class="recent-posts">
-    <div class="section-title"><h2><span>All Stories</span></h2></div>
-    <div class="row row-cols-1 row-cols-md-3">
-      {% for post in paginator.posts %}
-      <div class="col mb-4">
-        <div class="card h-100">
-          <a href="{{ post.url | prepend: site.baseurl }}">
-            {% if post.thumbnail %}
-            <img src="{{ post.thumbnail }}" class="card-img-top" alt="{{ post.title }}">
-            {% elsif post.images %}
-            <img src="{{ post.images }}" class="card-img-top" alt="{{ post.title }}">
-            {% else %}
-            <img src="/logo.jpg" class="card-img-top" alt="{{ post.title }}">
-            {% endif %}
-          </a>
-          <div class="card-body pb-0">
-            <h5 class="card-title"><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h5>
-            <p class="card-text">{{ post.excerpt }}</p>
-            <p>{% if post.tags %}
-              {% for tag in post.tags limit:4 %}<span class="badge badge-pill badge-primary">{{ tag }}</span> {% endfor %}
-            {% endif %}</p>
-          </div>
-          <div class="card-footer">
-            {{ post.date | date: "%-d %b %Y" }} &bull; {{ post.timeread }} read &bull; 
-            {% if post.comments %}
-            <a href="{{ post.url | prepend: site.baseurl }}#disqus_thread">Comments</a>
-            {% else %}
-            <span class="post-read">Comments not available</span>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </section>
-  <br><hr>
-  <nav aria-label="Site Pagination">
-    <ul class="pagination">
-      {% if paginator.total_pages > 1 %}
-        {% if paginator.previous_page %}
-          <li class="page-item"><a class="page-link" href="{{ paginator.previous_page_path | relative_url }}">Prev</a></li>
-        {% else %}
-          <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Prev</a></li>
-        {% endif %}
-        {% for page in (1..paginator.total_pages) %}
-          {% if page == paginator.page %}
-            <li class="page-item active" aria-current="page">
-              <span class="page-link">{{ page }}<span class="sr-only">(current)</span></span>
-            </li>
-          {% elsif page == 1 %}
-            <li class="page-item">
-              <a class="page-link" href="{{ paginator.previous_page_path | relative_url }}">{{ page }}</a>
-            </li>
-          {% else %}
-            <li class="page-item">
-              <a class="page-link" href="{{ site.paginate_path | relative_url | replace: ':num', page }}">{{ page }}</a>
-            </li>
-          {% endif %}
-        {% endfor %}
-        {% if paginator.next_page %}
-          <li class="page-item">
-            <a class="page-link" href="{{ paginator.next_page_path | relative_url }}">Next</a>
-          </li>
-        {% else %}
-          <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
-          </li>
-        {% endif %}
-      {% endif %}
-    </ul>
-  </nav>
-</div>
-{% include footer.html %}
-{% if site.disqus_shortname %}
-<script id="dsq-count-scr" src="https://{{ site.disqus_shortname }}.disqus.com/count.js" async></script>
-{% endif %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <title>Cikal</title>
+  <style>@font-face {font-family: 'Operator Mono'; src: url('fonts/OperatorMono-Medium.woff2') format('woff2'), url('fonts/OperatorMono-Medium.woff') format('woff'); font-weight: 500; font-style: normal;} @font-face {font-family: 'Operator Mono'; src: url('fonts/OperatorMono-MediumItalic.woff2') format('woff2'), url('fonts/OperatorMono-MediumItalic.woff') format('woff'); font-weight: 500; font-style: italic;} .wrapper { padding: 20px; font-family: 'Operator Mono'; font-size: 18px; } p { font-style: italic; } p:last-child { margin-top: 3em; padding-left: 10px; height: 24px; vertical-align: middle; border-left: 5px solid tomato } @media (min-width: 600px) {.wrapper { position: absolute; margin: auto; padding: 0px; max-width: 600px; left: 50%; top: 30%; transform: translate(-50%,-30%);}}</style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <h1>UNDER MAINTENANCE</h1>
+    <p><em>Will come with fresh core, fresh look, and tutorials.</em></p>
+    <p>ian cikal.</p>
+  </div>
+</body>
+
+</html>
